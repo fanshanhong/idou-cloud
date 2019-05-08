@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fan.idou.dao.mapper.VideoMapper">
+  <resultMap id="BaseResultMap" type="com.fan.idou.dao.pojo.Video">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="video_id" jdbcType="VARCHAR" property="videoId" />
+    <result column="publish_user_id" jdbcType="VARCHAR" property="publishUserId" />
+    <result column="bgm_id" jdbcType="VARCHAR" property="bgmId" />
+    <result column="video_desc" jdbcType="VARCHAR" property="videoDesc" />
+    <result column="video_path" jdbcType="VARCHAR" property="videoPath" />
+    <result column="video_seconds" jdbcType="INTEGER" property="videoSeconds" />
+    <result column="cover_path" jdbcType="VARCHAR" property="coverPath" />
+    <result column="like_counts" jdbcType="INTEGER" property="likeCounts" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, video_id, publish_user_id, bgm_id, video_desc, video_path, video_seconds, cover_path, 
+    like_counts, status, create_time
+  </sql>
+  <select id="selectByExample" parameterType="com.fan.idou.dao.pojo.VideoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from video
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from video
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from video
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fan.idou.dao.pojo.VideoExample">
+    delete from video
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fan.idou.dao.pojo.Video">
+    insert into video (id, video_id, publish_user_id, 
+      bgm_id, video_desc, video_path, 
+      video_seconds, cover_path, like_counts, 
+      status, create_time)
+    values (#{id,jdbcType=BIGINT}, #{videoId,jdbcType=VARCHAR}, #{publishUserId,jdbcType=VARCHAR}, 
+      #{bgmId,jdbcType=VARCHAR}, #{videoDesc,jdbcType=VARCHAR}, #{videoPath,jdbcType=VARCHAR}, 
+      #{videoSeconds,jdbcType=INTEGER}, #{coverPath,jdbcType=VARCHAR}, #{likeCounts,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fan.idou.dao.pojo.Video">
+    insert into video
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="videoId != null">
+        video_id,
+      </if>
+      <if test="publishUserId != null">
+        publish_user_id,
+      </if>
+      <if test="bgmId != null">
+        bgm_id,
+      </if>
+      <if test="videoDesc != null">
+        video_desc,
+      </if>
+      <if test="videoPath != null">
+        video_path,
+      </if>
+      <if test="videoSeconds != null">
+        video_seconds,
+      </if>
+      <if test="coverPath != null">
+        cover_path,
+      </if>
+      <if test="likeCounts != null">
+        like_counts,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="videoId != null">
+        #{videoId,jdbcType=VARCHAR},
+      </if>
+      <if test="publishUserId != null">
+        #{publishUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="bgmId != null">
+        #{bgmId,jdbcType=VARCHAR},
+      </if>
+      <if test="videoDesc != null">
+        #{videoDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="videoPath != null">
+        #{videoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="videoSeconds != null">
+        #{videoSeconds,jdbcType=INTEGER},
+      </if>
+      <if test="coverPath != null">
+        #{coverPath,jdbcType=VARCHAR},
+      </if>
+      <if test="likeCounts != null">
+        #{likeCounts,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fan.idou.dao.pojo.VideoExample" resultType="java.lang.Long">
+    select count(*) from video
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update video
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.videoId != null">
+        video_id = #{record.videoId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.publishUserId != null">
+        publish_user_id = #{record.publishUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bgmId != null">
+        bgm_id = #{record.bgmId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.videoDesc != null">
+        video_desc = #{record.videoDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.videoPath != null">
+        video_path = #{record.videoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.videoSeconds != null">
+        video_seconds = #{record.videoSeconds,jdbcType=INTEGER},
+      </if>
+      <if test="record.coverPath != null">
+        cover_path = #{record.coverPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.likeCounts != null">
+        like_counts = #{record.likeCounts,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update video
+    set id = #{record.id,jdbcType=BIGINT},
+      video_id = #{record.videoId,jdbcType=VARCHAR},
+      publish_user_id = #{record.publishUserId,jdbcType=VARCHAR},
+      bgm_id = #{record.bgmId,jdbcType=VARCHAR},
+      video_desc = #{record.videoDesc,jdbcType=VARCHAR},
+      video_path = #{record.videoPath,jdbcType=VARCHAR},
+      video_seconds = #{record.videoSeconds,jdbcType=INTEGER},
+      cover_path = #{record.coverPath,jdbcType=VARCHAR},
+      like_counts = #{record.likeCounts,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fan.idou.dao.pojo.Video">
+    update video
+    <set>
+      <if test="videoId != null">
+        video_id = #{videoId,jdbcType=VARCHAR},
+      </if>
+      <if test="publishUserId != null">
+        publish_user_id = #{publishUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="bgmId != null">
+        bgm_id = #{bgmId,jdbcType=VARCHAR},
+      </if>
+      <if test="videoDesc != null">
+        video_desc = #{videoDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="videoPath != null">
+        video_path = #{videoPath,jdbcType=VARCHAR},
+      </if>
+      <if test="videoSeconds != null">
+        video_seconds = #{videoSeconds,jdbcType=INTEGER},
+      </if>
+      <if test="coverPath != null">
+        cover_path = #{coverPath,jdbcType=VARCHAR},
+      </if>
+      <if test="likeCounts != null">
+        like_counts = #{likeCounts,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fan.idou.dao.pojo.Video">
+    update video
+    set video_id = #{videoId,jdbcType=VARCHAR},
+      publish_user_id = #{publishUserId,jdbcType=VARCHAR},
+      bgm_id = #{bgmId,jdbcType=VARCHAR},
+      video_desc = #{videoDesc,jdbcType=VARCHAR},
+      video_path = #{videoPath,jdbcType=VARCHAR},
+      video_seconds = #{videoSeconds,jdbcType=INTEGER},
+      cover_path = #{coverPath,jdbcType=VARCHAR},
+      like_counts = #{likeCounts,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

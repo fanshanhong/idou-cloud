@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fan.idou.dao.mapper.UserMapper">
+  <resultMap id="BaseResultMap" type="com.fan.idou.dao.pojo.User">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="personal_sign" jdbcType="VARCHAR" property="personalSign" />
+    <result column="school" jdbcType="VARCHAR" property="school" />
+    <result column="sex" jdbcType="VARCHAR" property="sex" />
+    <result column="birthday" jdbcType="VARCHAR" property="birthday" />
+    <result column="region" jdbcType="VARCHAR" property="region" />
+    <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="portrait" jdbcType="VARCHAR" property="portrait" />
+    <result column="fans_count" jdbcType="BIGINT" property="fansCount" />
+    <result column="follow_count" jdbcType="BIGINT" property="followCount" />
+    <result column="receive_like_count" jdbcType="BIGINT" property="receiveLikeCount" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, user_id, nick_name, personal_sign, school, sex, birthday, region, phone_number, 
+    password, portrait, fans_count, follow_count, receive_like_count
+  </sql>
+  <select id="selectByExample" parameterType="com.fan.idou.dao.pojo.UserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from user
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fan.idou.dao.pojo.UserExample">
+    delete from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.fan.idou.dao.pojo.User">
+    insert into user (id, user_id, nick_name, 
+      personal_sign, school, sex, 
+      birthday, region, phone_number, 
+      password, portrait, fans_count, 
+      follow_count, receive_like_count)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, 
+      #{personalSign,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, #{sex,jdbcType=VARCHAR}, 
+      #{birthday,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{portrait,jdbcType=VARCHAR}, #{fansCount,jdbcType=BIGINT}, 
+      #{followCount,jdbcType=BIGINT}, #{receiveLikeCount,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fan.idou.dao.pojo.User">
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="nickName != null">
+        nick_name,
+      </if>
+      <if test="personalSign != null">
+        personal_sign,
+      </if>
+      <if test="school != null">
+        school,
+      </if>
+      <if test="sex != null">
+        sex,
+      </if>
+      <if test="birthday != null">
+        birthday,
+      </if>
+      <if test="region != null">
+        region,
+      </if>
+      <if test="phoneNumber != null">
+        phone_number,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="portrait != null">
+        portrait,
+      </if>
+      <if test="fansCount != null">
+        fans_count,
+      </if>
+      <if test="followCount != null">
+        follow_count,
+      </if>
+      <if test="receiveLikeCount != null">
+        receive_like_count,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="personalSign != null">
+        #{personalSign,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null">
+        #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="portrait != null">
+        #{portrait,jdbcType=VARCHAR},
+      </if>
+      <if test="fansCount != null">
+        #{fansCount,jdbcType=BIGINT},
+      </if>
+      <if test="followCount != null">
+        #{followCount,jdbcType=BIGINT},
+      </if>
+      <if test="receiveLikeCount != null">
+        #{receiveLikeCount,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fan.idou.dao.pojo.UserExample" resultType="java.lang.Long">
+    select count(*) from user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update user
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickName != null">
+        nick_name = #{record.nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personalSign != null">
+        personal_sign = #{record.personalSign,jdbcType=VARCHAR},
+      </if>
+      <if test="record.school != null">
+        school = #{record.school,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sex != null">
+        sex = #{record.sex,jdbcType=VARCHAR},
+      </if>
+      <if test="record.birthday != null">
+        birthday = #{record.birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="record.region != null">
+        region = #{record.region,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneNumber != null">
+        phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.portrait != null">
+        portrait = #{record.portrait,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fansCount != null">
+        fans_count = #{record.fansCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.followCount != null">
+        follow_count = #{record.followCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.receiveLikeCount != null">
+        receive_like_count = #{record.receiveLikeCount,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update user
+    set id = #{record.id,jdbcType=BIGINT},
+      user_id = #{record.userId,jdbcType=VARCHAR},
+      nick_name = #{record.nickName,jdbcType=VARCHAR},
+      personal_sign = #{record.personalSign,jdbcType=VARCHAR},
+      school = #{record.school,jdbcType=VARCHAR},
+      sex = #{record.sex,jdbcType=VARCHAR},
+      birthday = #{record.birthday,jdbcType=VARCHAR},
+      region = #{record.region,jdbcType=VARCHAR},
+      phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      portrait = #{record.portrait,jdbcType=VARCHAR},
+      fans_count = #{record.fansCount,jdbcType=BIGINT},
+      follow_count = #{record.followCount,jdbcType=BIGINT},
+      receive_like_count = #{record.receiveLikeCount,jdbcType=BIGINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fan.idou.dao.pojo.User">
+    update user
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
+      </if>
+      <if test="personalSign != null">
+        personal_sign = #{personalSign,jdbcType=VARCHAR},
+      </if>
+      <if test="school != null">
+        school = #{school,jdbcType=VARCHAR},
+      </if>
+      <if test="sex != null">
+        sex = #{sex,jdbcType=VARCHAR},
+      </if>
+      <if test="birthday != null">
+        birthday = #{birthday,jdbcType=VARCHAR},
+      </if>
+      <if test="region != null">
+        region = #{region,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="portrait != null">
+        portrait = #{portrait,jdbcType=VARCHAR},
+      </if>
+      <if test="fansCount != null">
+        fans_count = #{fansCount,jdbcType=BIGINT},
+      </if>
+      <if test="followCount != null">
+        follow_count = #{followCount,jdbcType=BIGINT},
+      </if>
+      <if test="receiveLikeCount != null">
+        receive_like_count = #{receiveLikeCount,jdbcType=BIGINT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fan.idou.dao.pojo.User">
+    update user
+    set user_id = #{userId,jdbcType=VARCHAR},
+      nick_name = #{nickName,jdbcType=VARCHAR},
+      personal_sign = #{personalSign,jdbcType=VARCHAR},
+      school = #{school,jdbcType=VARCHAR},
+      sex = #{sex,jdbcType=VARCHAR},
+      birthday = #{birthday,jdbcType=VARCHAR},
+      region = #{region,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      portrait = #{portrait,jdbcType=VARCHAR},
+      fans_count = #{fansCount,jdbcType=BIGINT},
+      follow_count = #{followCount,jdbcType=BIGINT},
+      receive_like_count = #{receiveLikeCount,jdbcType=BIGINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
