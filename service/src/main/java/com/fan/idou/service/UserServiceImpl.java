@@ -26,4 +26,14 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
+
+    /**
+     * 创建新用户
+     * @param user
+     * @return
+     */
+    @Override
+    public boolean createUser(User user) {
+        return false;
+    }
 }

@@ -1,4 +1,4 @@
-package com.fan.douyin.api;
+package com.fan.idou.api.reptile;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -18,27 +18,34 @@ public class LoginController {
         return "welcome  " + username;
     }
 
+    /**
+     * 使用手机号+验证码进行登陆
+     *
+     * @param phoneNumber
+     * @param verificationCode
+     * @return
+     */
     @PostMapping("/loginByVerificationCode")
     public IDouJSONResult loginByVerificationCode(@RequestParam String phoneNumber, @RequestParam String verificationCode) {
 
-
         if (!isLegal(phoneNumber, verificationCode)) {
-
-            return IDouJSONResult.errorMsg("验证码错误, 请重试");
-
+            return IDouJSONResult.errorMsg("验证码错误, 请重新输入");
         }
 
         User user = userService.queryUserByPhoneNumber(phoneNumber);
         if (user != null) {
-            // 查到用户信息并返回
+            // 使用手机号查到用户信息并返回
             return IDouJSONResult.ok(user);
         } else {
             // 新用户注册
             User newUser = new User();
             newUser.setPhoneNumber(phoneNumber);
-//            userService.createUser(newUser);
-//            return DouyinJSONResult.ok(setUserRedisSessionToken(newUser));
-            return null;
+            boolean createSuccess = userService.createUser(newUser);
+            if (createSuccess) {// 创建新用户成功
+                return IDouJSONResult.ok(newUser);
+            } else {
+                return IDouJSONResult.errorMsg("注册失败");
+            }
         }
 
     }

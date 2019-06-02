@@ -1,4 +1,7 @@
 com\fan\idou\api\LoginController.class
+com\fan\idou\api\reptile\BgmReptile.class
+com\fan\idou\api\HelloController$1.class
 com\fan\idou\api\result\IDouJSONResult.class
+com\fan\idou\api\reptile\DBUtil.class
 com\fan\idou\api\HelloController.class
 com\fan\idou\IdouApplication.class

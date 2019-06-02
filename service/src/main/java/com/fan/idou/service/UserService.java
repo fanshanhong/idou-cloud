@@ -8,5 +8,7 @@ public interface UserService {
     public User queryUserByPhoneNumber(@NonNull String phoneNumber);
 
 
+    public boolean createUser(@NonNull User user);
+
 
 }
